@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Регистрация</h1>
+
+    <form method="POST" action="{{ url_for('auth.register') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="username">Имя пользователя:</label>
+            {{ form.username(class="form-control", placeholder="Имя пользователя") }}
+            {% if form.username.errors %}
+                <ul class="errors">
+                    {% for error in form.username.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            {{ form.email(class="form-control", placeholder="Email") }}
+            {% if form.email.errors %}
+                <ul class="errors">
+                    {% for error in form.email.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            {{ form.password(class="form-control", placeholder="Пароль") }}
+            {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Подтвердите пароль:</label>
+            {{ form.confirm_password(class="form-control", placeholder="Подтвердите пароль") }}
+            {% if form.confirm_password.errors %}
+                <ul class="errors">
+                    {% for error in form.confirm_password.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+    </form>
+    <p>Уже есть аккаунт? <a href="{{ url_for('auth.login') }}">Войти</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h3>Расписание вашей группы: {{ current_user.group.name }}</h3>
+    
+    <div class="list-group mt-4">
+        {% for schedule in schedules %}
+        <div class="list-group-item">
+            <div class="d-flex justify-content-between">
+                <h5>{{ schedule.subject }}</h5>
+                <small class="text-muted">
+                    {{ schedule.time.strftime('%d.%m.%Y %H:%M') }}
+                </small>
+            </div>
+            <div class="text-muted">
+                Группа: {{ schedule.group.name }}
+            </div>
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            На этой неделе занятий нет
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

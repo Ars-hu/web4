@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Добавить новое занятие</h2>
+
+    <form method="POST" class="mt-4">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.subject.label(class="form-label") }}
+            {{ form.subject(class="form-control") }}
+            {% for error in form.subject.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.time.label(class="form-label") }}
+            {{ form.time(class="form-control", type="datetime-local") }}
+            {% for error in form.time.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            <label>Группа</label>
+            {% if form.group_id.choices %}
+                {{ form.group_id(class="form-control") }}
+            {% else %}
+                <div class="alert alert-danger">
+                    Нет доступных групп. Сначала создайте группу в <a href="{{ url_for('admin.get_groups') }}">управлении группами</a>.
+                </div>
+            {% endif %}
+            {% for error in form.group_id.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

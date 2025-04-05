@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Расписание{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Расписание занятий</h1>
+    <table class="table table-bordered table-hover mt-4">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Группа</th>
+                <th>Предмет</th>
+                <th>Преподаватель</th>
+                <th>Дата и время</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in schedules %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ schedule.group.name }}</td>
+                <td>{{ schedule.subject }}</td>
+                <td>{{ schedule.group.teacher.username if schedule.group.teacher else 'Не назначен' }}</td>
+                <td>{{ schedule.time.strftime('%d.%m.%Y %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
