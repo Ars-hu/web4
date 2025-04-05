@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Редактирование группы</h1>
+
+    <form method="POST" action="{{ url_for('admin.update_group', group_id=group.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label for="name">Название группы</label>
+            {{ form.name(class="form-control", id="name", placeholder="Введите название группы") }}
+            {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="description">Описание</label>
+            {{ form.description(class="form-control", id="description", placeholder="Введите описание группы") }}
+            {% if form.description.errors %}
+                <ul class="errors">
+                    {% for error in form.description.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        <a href="{{ url_for('admin.get_groups') }}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+{% endblock %}

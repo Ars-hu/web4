@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Редактировать пользователя{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mt-4">Редактирование пользователя</h1>
+    <form method="POST" action="{{ url_for('admin.update_user', user_id=user.id) }}">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            <label for="username">Имя пользователя</label>
+            {{ form.username(class="form-control") }}
+            {% if form.username.errors %}
+                <ul class="errors">
+                    {% for error in form.username.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+                <ul class="errors">
+                    {% for error in form.email.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="role">Роль</label>
+            {{ form.role(class="form-control", onchange="updateGroupField()") }}
+            {% if form.role.errors %}
+                <ul class="errors">
+                    {% for error in form.role.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="group_id">Группа</label>
+            {{ form.group_id(class="form-control") }}
+            {% if form.group_id.errors %}
+                <ul class="errors">
+                    {% for error in form.group_id.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            {{ form.password(class="form-control", placeholder="Оставьте пустым, чтобы не изменять") }}
+            {% if form.password.errors %}
+                <ul class="errors">
+                    {% for error in form.password.errors %}
+                        <li style="color: red;">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+        <a href="{{ url_for('admin.get_users') }}" class="btn btn-secondary">Отмена</a>
+    </form>
+</div>
+
+<script>
+    function updateGroupField() {
+        const roleSelect = document.getElementById('role');
+        const groupSelect = document.getElementById('group_id');
+        const selectedRole = roleSelect.value;
+        const rolesWithoutGroup = ['admin', 'teacher'];
+
+        if (rolesWithoutGroup.includes(selectedRole)) {
+            groupSelect.disabled = true;
+            groupSelect.value = '';
+        } else {
+            groupSelect.disabled = false;
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateGroupField();
+    });
+</script>
+{% endblock %}

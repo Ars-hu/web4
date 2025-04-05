@@ -1,1 +1,28 @@
+{% extends "base.html" %}
 
+{% block content %}
+<div class="container">
+    <h1>Панель администратора</h1>
+
+    <div class="row">
+        <!-- Управление пользователями -->
+        <div class="col-md-4">
+            <h3>Пользователи</h3>
+            <a href="{{ url_for('admin.create_user') }}" class="btn btn-primary btn-block">Добавить пользователя</a>
+            <a href="{{ url_for('admin.get_users') }}" class="btn btn-secondary btn-block">Управление пользователями</a>
+        </div>
+
+        <!-- Управление группами -->
+        <div class="col-md-4">
+            <h3>Группы</h3>
+            <a href="{{ url_for('admin.get_groups') }}" class="btn btn-primary btn-block">Все группы</a>
+        </div>
+
+        <!-- Управление расписанием -->
+        <div class="col-md-4">
+            <h3>Расписание</h3>
+            <a href="{{ url_for('admin.view_schedule') }}" class="btn btn-secondary btn-block">Просмотр расписания</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
