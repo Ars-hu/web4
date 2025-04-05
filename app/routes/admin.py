@@ -51,13 +51,13 @@ def create_user():
         return redirect(url_for('admin.get_users'))
     return render_template('admin/create_user.html', form=form)
 
-@admin_bp.route('/users/<int:user_id>', methods=['GET', 'PATCH'])
+@admin_bp.route('/users/<int:user_id>/edit', methods=['GET', 'POST'])  # Изменён путь
 @login_required
 @role_required('admin')
 def update_user(user_id):
     user = Account.query.get_or_404(user_id)
     form = UserForm(obj=user)
-    if request.method == 'PATCH' and form.validate_on_submit():
+    if form.validate_on_submit():
         user.username = form.username.data or user.username
         user.email = form.email.data or user.email
         user.role = form.role.data or user.role
@@ -69,7 +69,7 @@ def update_user(user_id):
         return redirect(url_for('admin.get_users'))
     return render_template('admin/edit_user.html', form=form, user=user)
 
-@admin_bp.route('/users/<int:user_id>', methods=['DELETE'])
+@admin_bp.route('/users/<int:user_id>/delete', methods=['POST'])  # Изменён путь
 @login_required
 @role_required('admin')
 def delete_user(user_id):
@@ -77,7 +77,7 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     flash('Пользователь удалён!', 'success')
-    return '', 204
+    return redirect(url_for('admin.get_users'))
 
 @admin_bp.route('/groups', methods=['GET'])
 @login_required
@@ -103,7 +103,7 @@ def create_group():
         return redirect(url_for('admin.get_groups'))
     return render_template('admin/groups.html', groups=Group.query.all(), form=form)
 
-@admin_bp.route('/groups/<int:group_id>', methods=['PATCH'])
+@admin_bp.route('/groups/<int:group_id>/edit', methods=['GET', 'POST'])
 @login_required
 @role_required('admin')
 def update_group(group_id):
@@ -117,7 +117,7 @@ def update_group(group_id):
         return redirect(url_for('admin.get_groups'))
     return render_template('admin/edit_group.html', form=form, group=group)
 
-@admin_bp.route('/groups/<int:group_id>', methods=['DELETE'])
+@admin_bp.route('/groups/<int:group_id>/delete', methods=['POST'])
 @login_required
 @role_required('admin')
 def delete_group(group_id):
@@ -126,7 +126,7 @@ def delete_group(group_id):
     db.session.delete(group)
     db.session.commit()
     flash('Группа удалена.', 'success')
-    return '', 204
+    return redirect(url_for('admin.get_groups'))
 
 @admin_bp.route('/groups/<int:group_id>/students', methods=['GET'])
 @login_required
