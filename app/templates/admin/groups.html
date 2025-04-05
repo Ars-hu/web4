@@ -26,9 +26,10 @@
                     <td>{{ group.description }}</td>
                     <td>
                         <a href="{{ url_for('admin.update_group', group_id=group.id) }}" class="btn btn-primary btn-sm">Редактировать</a>
-                        <form method="POST" action="{{ url_for('admin.delete_group', group_id=group.id) }}" style="display: inline;" onsubmit="return confirm('Вы уверены, что хотите удалить эту группу?');">
-                            <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+                        <form method="POST" action="{{ url_for('admin.delete_group', group_id=group.id) }}" style="display: inline;">
+                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Вы уверены, что хотите удалить эту группу?');">
+                                Удалить
+                            </button>
                         </form>
                     </td>
                 </tr>
