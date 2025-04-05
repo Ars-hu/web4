@@ -27,7 +27,6 @@
                 <td>
                     <a href="{{ url_for('admin.update_user', user_id=user.id) }}" class="btn btn-sm btn-primary">Изменить</a>
                     <form method="POST" action="{{ url_for('admin.delete_user', user_id=user.id) }}" style="display: inline;" onsubmit="return confirm('Вы уверены?');">
-                        <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
                     </form>
                 </td>
